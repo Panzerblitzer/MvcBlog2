@@ -1,0 +1,33 @@
+﻿@model MvcBlog.Models.Article
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="Message">@TempData["Message"]</div>  
+
+<h2 style="padding-left: 1em;">Delete</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+<fieldset>
+    <legend>@Html.DisplayFor(model => model.Title)</legend>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Author)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateCreated)
+    </div>
+    <div class="display-field" style="border-top: 1px dashed #1738AB;">
+        @Html.Raw(Model.Content)
+    </div>
+    @Html.Partial("TagDisplay", Model.Categories.ToList())
+    <p>
+            <input type="submit" value="Delete" />
+    </p>
+    </fieldset>
+}
+
+<div style="padding-left: 1em;">
+    @Html.ActionLink("Back to List", "Index")
+</div>

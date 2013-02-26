@@ -1,0 +1,33 @@
+﻿@model MvcBlog.Models.Article
+           
+@using MvcBlog.Helpers
+
+@{
+    ViewBag.Title = "Article";
+}
+<div class="post">
+    <div class="title">@Html.DisplayFor(model => model.Title)</div>
+    <div class="meta">
+        @Html.DisplayFor(model => model.Author)
+    </div>
+    <div class="meta">
+        @Html.DisplayFor(model => model.DateCreated)
+    </div>
+    <div class="entry">
+        @Html.Raw(Model.Content)
+    </div>
+    @Html.Partial("TagDisplay", Model.Categories.ToList())
+ 
+ <p style="padding-left: 1em;">
+@Html.ActionLink("Link to Article", "Article", new { id = Model.ArticleId, seotext = Model.Title.ToSeoUrl() })
+@Html.Raw(" | ")
+
+@{if (User.IsInRole("Admin")){
+    @Html.ActionLink("Edit", "Edit", "Admin", new { articleId=Model.ArticleId }, null)
+    @Html.Raw(" | ")
+    }
+}
+    @Html.ActionLink("Back to List", "Index")
+</p>
+</div>
+

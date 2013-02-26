@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBlog", "MvcBlog\MvcBlog.csproj", "{E81483DF-F313-4F7A-B744-75081388D284}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E81483DF-F313-4F7A-B744-75081388D284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E81483DF-F313-4F7A-B744-75081388D284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E81483DF-F313-4F7A-B744-75081388D284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E81483DF-F313-4F7A-B744-75081388D284}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

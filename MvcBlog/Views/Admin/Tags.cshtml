@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MvcBlog.Models.Category>
+
+@{
+    ViewBag.Title = "Tags";
+}
+
+@if (TempData["Message"] != null){
+    <div class="Message">@TempData["Message"]</div>       
+}
+
+<h2>Tag Administration</h2>
+
+<div  style="padding-bottom: 2em; padding-top: 1em;"">
+    @Html.ActionLink("Create New", "CreateTag") | @Html.ActionLink("Admin Index", "Index")
+</div>
+
+@foreach (var item in Model) {
+
+<fieldset>
+    <legend>@Html.DisplayFor(modelItem => item.Name)</legend>
+            <div class="display-label">@Html.ActionLink("Edit", "EditTag", new { categoryId=item.CategoryId })</div>
+</fieldset>
+}

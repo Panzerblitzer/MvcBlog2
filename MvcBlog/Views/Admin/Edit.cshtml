@@ -1,0 +1,172 @@
+﻿@model MvcBlog.Models.Article
+
+@{
+    ViewBag.Title = "Admin: Edit Article";
+}
+
+@section Stylesheets
+{
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/fileuploader.css")" />
+}
+
+@section Javascripts
+{
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/tiny_mce/tiny_mce.js")"></script>
+    <script type="text/javascript">
+        tinyMCE.init({
+            convert_urls : false,
+            mode: "textareas"
+        });
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fileuploader.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+
+            var uploader1 = new qq.FileUploader({
+
+                element: jQuery('#btnUploader1')[0], // The HTML element to turn into the uploader
+
+                action: getUrl('ControllerUploadHandler', 'Admin'), // Action method that will handle the upload
+
+                multiple: false, // Single or Mutliple file selection
+
+                allowedExtensions: ['png', 'jpeg', 'jpg', 'gif', 'bmp'], // File Type restrictions
+
+                sizeLimit: 0, // Max File Size
+                minSizeLimit: 0, // Min File Size
+
+                debug: false, // When true outputs server response to browser console
+
+                // Show a preview of the uploaded image
+                onComplete: function (id, fileName, responseJSON) {
+
+                    // Get the preview container
+                    var $previewContainer = jQuery('#uploader1Preview');
+
+                    // Create the preview img element
+                    var $preview = jQuery('<img />');
+                    // Add the current time to the end of the preview handler's url to prevent caching by the browser
+                    $preview.attr('src', getUrl() + 'Content/handlers/previewPhoto.ashx?filename=' + fileName + '&v=' + new Date().getTime());
+                    // Hide the preview and set it's size
+                    $preview.css({ display: 'none', width: '90%', height: '200px' });
+
+                    // Make sure the preview's container is empty
+                    $previewContainer.html('');
+                    // Append the preview to the container
+                    $previewContainer.append($preview);
+
+                    // Fade in the preview
+                    $preview.fadeIn('slow');
+
+                }
+            });
+
+        });
+
+        // A little helper function to ensure the url's work in asp.net development server and IIS
+        function getUrl(action, controller) {
+            var protocol = window.location.protocol;
+            var host = window.location.host;
+
+            var url = (protocol + '//' + host + '/');
+
+            if ((controller != null && controller != 'undefined') && (action != null && action != 'undefined'))
+                url += controller + '/' + action;
+
+            return url;
+        }
+
+    </script>
+}
+
+@{ if (TempData["Message"] != null){
+<div class="Message">@TempData["Message"]</div>       
+    }
+}
+<h2 style="padding-left: 1em;">Edit Article</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Article</legend>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.Title)
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Author)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.Author)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.DateCreated)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.DateCreated)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.LastEdit)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.LastEdit)
+        </div>
+                <div class="editor-label">
+            @Html.LabelFor(m => m.IsPublished)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.IsPublished)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Content)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(m => m.Content)
+            @Html.ValidationMessageFor(m => m.Content)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Categories)
+        </div>
+        <div class="editor-field">
+            @foreach (var ArticleTag in (IEnumerable<MvcBlog.Models.Category>)ViewBag.Categories)
+            {
+                <input type="checkbox" name="ArticleTagId" value="@ArticleTag.CategoryId"
+                @foreach (var c in Model.Categories)
+                {
+                    if (c.CategoryId == ArticleTag.CategoryId)
+                    {
+                        @String.Format("checked=\"checked\"")
+                    }
+                }
+                />
+                @ArticleTag.Name
+                <br />
+            }
+        </div>
+        <div id="btnUploader1" style="margin-top: 10px;">
+            <noscript>
+                <p>Please enable JavaScript to use file uploader.</p>
+            </noscript>
+        </div>
+
+        <div id="uploader1Preview" style="margin-top: 10px;">
+        </div>
+
+        <input type="submit" value="Save Article" />
+    </fieldset>
+
+}  
+    
+    <div style="padding-left: 1em;">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+

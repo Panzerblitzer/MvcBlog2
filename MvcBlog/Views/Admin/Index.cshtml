@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MvcBlog.Models.Article>
+
+@{
+    ViewBag.Title = "Admin Index";
+}
+
+@if (TempData["Message"] != null){
+    <div class="Message">@TempData["Message"]</div>       
+}
+
+<h2>Blog Administration</h2>
+
+<div style="padding-bottom: 2em; padding-top: 1em;">
+    @Html.ActionLink("Create New Article", "Create") | @Html.ActionLink("Admin Tags", "Tags")
+</div>
+
+@{foreach (var article in Model)
+  {
+      <fieldset>
+      <legend>@Html.ActionLink(article.Title, "article", "Blog", new { id = article.ArticleId }, new {@style="color: #696969; text-decoration: none;"})</legend>
+          <div style="float: right;">
+              <div class="display-label">Created: @article.DateCreated</div>
+              <div class="display-label">Edited: @article.LastEdit</div>
+              <div class="display-label">
+                    @Html.ActionLink("Edit", "Edit", new { articleId = article.ArticleId }) |
+                    @Html.ActionLink("Delete", "Delete", new { articleId = article.ArticleId })
+               </div>
+          </div>
+          <div style="float:left;">
+              <div class="display-label">Author: @article.Author</div>
+              <div class="display-label"><b>Published?</b> @article.IsPublished</div>
+          </div>
+      </fieldset>
+   }
+   
+}

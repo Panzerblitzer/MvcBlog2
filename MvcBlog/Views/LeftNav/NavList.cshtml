@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MvcBlog.Models.Category>
+
+@{
+    Layout = null;
+}
+<ul>
+    <li>
+    @Html.ActionLink("Home", "Index", "Home")
+    </li>
+    @foreach (var link in Model)
+    {
+        <li>
+        @Html.RouteLink(link.Name, new { controller = "Blog", action = "Tags", id = link.CategoryId })
+        </li>
+    }
+
+    @if (Roles.IsUserInRole("Admin"))
+      {
+        <li>
+        @Html.ActionLink("Admin", "Index", "Admin")
+        </li>
+      }
+</ul>

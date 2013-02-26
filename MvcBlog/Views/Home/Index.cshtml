@@ -1,0 +1,22 @@
+﻿@model IEnumerable<MvcBlog.Models.Article>
+
+@using MvcBlog.Helpers;
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{foreach (var article in Model)
+  {
+      <div class="post">
+      <h2 class="title">@Html.ActionLink(article.Title, "article", "Blog", new { id = article.ArticleId, seotext = article.Title.ToSeoUrl() }, new { @style = "color: #696969; text-decoration: none;" })</h2>
+          <p class="meta"><span class="date">@article.DateCreated</span><span class="posted">Posted by: @article.Author</span></p>
+
+          <div style="clear: both;">&nbsp;</div>
+				<div class="entry">
+                <p>@article.Content.Shorten(150)</p>
+
+                <p class="links">@Html.ActionLink("Read More", "article", "Blog", new { id = article.ArticleId, seotext = article.Title.ToSeoUrl() }, new { @style = "color: #696969; text-decoration: none;" })</p>
+                </div>
+      </div>
+   }
+}

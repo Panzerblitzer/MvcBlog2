@@ -1,0 +1,8 @@
+﻿@model IEnumerable<MvcBlog.Models.Category>
+
+<div class="editor-label">Tags</div>
+<div class="tag-list">
+@foreach (var item in Model) {
+            <span class="tag">@Html.DisplayFor(modelItem => item.Name)</span>
+}
+</div>
